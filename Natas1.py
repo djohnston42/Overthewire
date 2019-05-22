@@ -1,10 +1,10 @@
-# webscraper for natas0
+# webscraper for natas1
 from bs4 import BeautifulSoup
 import requests
 import os
 
-username = 'natas0'
-password = 'natas0'
+username = 'natas1'
+password = 'gtVrDuiDfck831PqWsLEZy5gyDz1clto'
 url = 'http://%s.natas.labs.overthewire.org' % username
 
 session = requests.Session()
