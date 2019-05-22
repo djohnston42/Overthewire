@@ -13,14 +13,20 @@ resp = session.get(url, auth=(username, password))
 content = resp.text
 
 soup = BeautifulSoup(content, 'html.parser')
-print(soup.body)
+#print(soup.body)
 
 el = soup.find('img')
 file_location = (el['src'])
+#print(file_location)
 #pull out img src
 
 def fileLocationRequest():
-    resp2 = session.get(url+'/'+file_location, auth=(username, password))
-    print(resp2.text)
+    resp2 = session.get(url+'/files/', auth=(username, password))
+    #print(resp2.text)
+    locationContent = resp2.text
+    soup2 = BeautifulSoup(locationContent, 'html.parser')
+    el2 = soup2.findAll('a')[6]
+    print(el2['href']) #pull out href value for password file
 
 fileLocationRequest()
+
